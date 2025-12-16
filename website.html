@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Arc Astra - Next Generation Cryptocurrency Mining Platform">
+    <title>Arc Astra - Mine the Future</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyan-primary: #06b6d4;
+            --cyan-bright: #22d3ee;
+            --blue-deep: #0c4a6e;
+            --blue-dark: #082f49;
+            --gold-accent: #fbbf24;
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #0f172a;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --border-subtle: rgba(6, 182, 212, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at 20% 30%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(34, 211, 238, 0.1) 0%, transparent 50%),
+                var(--bg-primary);
+        }
+        
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(0deg, rgba(6, 182, 212, 0.03) 0px, transparent 1px, transparent 2px, rgba(6, 182, 212, 0.03) 3px),
+                repeating-linear-gradient(90deg, rgba(6, 182, 212, 0.03) 0px, transparent 1px, transparent 2px, rgba(6, 182, 212, 0.03) 3px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+        
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 14, 26, 0.8);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--cyan-bright) 0%, var(--cyan-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--cyan-bright);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--cyan-bright);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+        
+        .mobile-toggle span {
+            width: 28px;
+            height: 2px;
+            background: var(--cyan-bright);
+            transition: all 0.3s ease;
+        }
+        
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 3rem 4rem;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            text-align: center;
+        }
+        
+        .hero-label {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 50px;
+            color: var(--cyan-bright);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+        
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.6s ease 0.4s both;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--cyan-bright) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.7;
+            animation: fadeInUp 0.6s ease 0.6s both;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.6s ease 0.8s both;
+        }
+        
+        .app-download {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--cyan-primary), var(--cyan-bright));
+            color: var(--bg-primary);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(6, 182, 212, 0.3);
+        }
+        
+        .app-download:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(6, 182, 212, 0.5);
+        }
+        
+        .app-download svg {
+            width: 24px;
+            height: 24px;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Section Styles */
+        section {
+            position: relative;
+            padding: 8rem 3rem;
+            z-index: 10;
+        }
+        
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 5rem;
+        }
+        
+        .section-label {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            background: rgba(6, 182, 212, 0.1);
+            border-radius: 50px;
+            color: var(--cyan-bright);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+        
+        /* Ecosystem Grid */
+        .ecosystem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .ecosystem-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 3rem 2.5rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ecosystem-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cyan-bright), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .ecosystem-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(6, 182, 212, 0.4);
+            box-shadow: 0 20px 60px rgba(6, 182, 212, 0.15);
+        }
+        
+        .ecosystem-card:hover::before {
+            opacity: 1;
+        }
+        
+        .ecosystem-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        
+        .ecosystem-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .ecosystem-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+        
+        /* Roadmap Timeline */
+        .roadmap {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .roadmap::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, 
+                transparent, 
+                var(--cyan-primary) 10%, 
+                var(--cyan-primary) 90%, 
+                transparent
+            );
+        }
+        
+        .roadmap-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 6rem;
+            position: relative;
+        }
+        
+        .roadmap-item:nth-child(even) .roadmap-content {
+            grid-column: 1;
+            text-align: right;
+        }
+        
+        .roadmap-item:nth-child(odd) .roadmap-content {
+            grid-column: 2;
+        }
+        
+        .roadmap-content {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+        }
+        
+        .roadmap-quarter {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: linear-gradient(135deg, var(--cyan-primary), var(--cyan-bright));
+            color: var(--bg-primary);
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 50px;
+            margin-bottom: 1rem;
+        }
+        
+        .roadmap-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .roadmap-content ul {
+            list-style: none;
+            color: var(--text-secondary);
+        }
+        
+        .roadmap-content li {
+            padding: 0.6rem 0;
+            padding-left: 1.8rem;
+            position: relative;
+        }
+        
+        .roadmap-content li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--cyan-bright);
+            font-weight: 700;
+        }
+        
+        .roadmap-dot {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: var(--cyan-bright);
+            border: 4px solid var(--bg-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 0 8px rgba(6, 182, 212, 0.2);
+            z-index: 10;
+        }
+        
+        /* Tokenomics */
+        .tokenomics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .token-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .token-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(6, 182, 212, 0.4);
+        }
+        
+        .token-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--cyan-bright), var(--cyan-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .token-label {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        /* Blog Grid */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .blog-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.4s ease;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(6, 182, 212, 0.4);
+            box-shadow: 0 20px 60px rgba(6, 182, 212, 0.15);
+        }
+        
+        .blog-image {
+            width: 100%;
+            height: 240px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(34, 211, 238, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        
+        .blog-body {
+            padding: 2rem;
+        }
+        
+        .blog-date {
+            color: var(--cyan-bright);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .blog-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        
+        .blog-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        
+        /* Documents Section */
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .document-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+        
+        .document-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(6, 182, 212, 0.4);
+            box-shadow: 0 20px 60px rgba(6, 182, 212, 0.15);
+        }
+        
+        .document-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .document-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .document-card p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .btn-download {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--cyan-primary), var(--cyan-bright));
+            color: var(--bg-primary);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-download:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(6, 182, 212, 0.4);
+        }
+        
+        /* About Section */
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .about-text {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .about-text p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-text p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+        }
+        
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--cyan-bright), var(--cyan-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        
+        /* Contact Form */
+        .contact-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .contact-form {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 3rem;
+        }
+        
+        .form-group {
+            margin-bottom: 2rem;
+        }
+        
+        .form-group label {
+            display: block;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            background: rgba(10, 14, 26, 0.6);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--cyan-bright);
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--cyan-primary), var(--cyan-bright));
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(6, 182, 212, 0.4);
+        }
+        
+        /* Footer */
+        footer {
+            position: relative;
+            background: rgba(10, 14, 26, 0.9);
+            border-top: 1px solid var(--border-subtle);
+            padding: 5rem 3rem 3rem;
+            z-index: 10;
+        }
+        
+        .footer-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-brand .logo {
+            font-size: 32px;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        
+        .footer-brand p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 350px;
+        }
+        
+        .footer-section h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--cyan-bright);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cyan-bright);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background: linear-gradient(135deg, var(--cyan-primary), var(--cyan-bright));
+            color: var(--bg-primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border-subtle);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .nav-container {
+                padding: 1.5rem 2rem;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: rgba(10, 14, 26, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 3rem;
+                gap: 2rem;
+                transition: left 0.4s ease;
+                align-items: flex-start;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .mobile-toggle {
+                display: flex;
+            }
+            
+            section {
+                padding: 6rem 2rem;
+            }
+            
+            .roadmap::before {
+                left: 20px;
+            }
+            
+            .roadmap-item {
+                grid-template-columns: 1fr;
+                gap: 0;
+                padding-left: 60px;
+            }
+            
+            .roadmap-item:nth-child(even) .roadmap-content,
+            .roadmap-item:nth-child(odd) .roadmap-content {
+                grid-column: 1;
+                text-align: left;
+            }
+            
+            .roadmap-dot {
+                left: 20px;
+                transform: translate(-50%, 0);
+                top: 30px;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .nav-container {
+                padding: 1.2rem 1.5rem;
+            }
+            
+            .hero {
+                padding: 6rem 1.5rem 3rem;
+            }
+            
+            section {
+                padding: 4rem 1.5rem;
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+            }
+            
+            .app-download {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .ecosystem-grid,
+            .blog-grid,
+            .tokenomics-grid,
+            .documents-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Arc Astra</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#ecosystem">ECOSYSTEM</a></li>
+                <li><a href="#roadmap">ROADMAP</a></li>
+                <li><a href="#tokenomics">TOKENOMICS</a></li>
+                <li><a href="#blog">BLOG</a></li>
+                <li><a href="#documents">DOCUMENTS</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+            <div class="mobile-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <span class="hero-label">NEXT GENERATION MINING</span>
+            <h1>Mine the Future</h1>
+            <p>Join the revolution in decentralized cryptocurrency mining. Earn rewards, build your network, and shape the future of blockchain technology.</p>
+            <div class="hero-cta">
+                <a href="#" class="app-download">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                    </svg>
+                    <span>Download on App Store</span>
+                </a>
+                <a href="#" class="app-download">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
+                    </svg>
+                    <span>Get it on Google Play</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Ecosystem Section -->
+    <section id="ecosystem">
+        <div class="section-header">
+            <span class="section-label">ECOSYSTEM</span>
+            <h2 class="section-title">Powerful Features</h2>
+            <p class="section-description">Experience the cutting-edge technology that powers Arc Astra's mining ecosystem</p>
+        </div>
+        <div class="ecosystem-grid">
+            <div class="ecosystem-card">
+                <span class="ecosystem-icon">⚡</span>
+                <h3>Lightning Fast Mining</h3>
+                <p>Advanced algorithms deliver unparalleled mining speed and efficiency, maximizing your earning potential every second.</p>
+            </div>
+            <div class="ecosystem-card">
+                <span class="ecosystem-icon">🔒</span>
+                <h3>Military-Grade Security</h3>
+                <p>Your assets are protected with state-of-the-art encryption and multi-layered security protocols.</p>
+            </div>
+            <div class="ecosystem-card">
+                <span class="ecosystem-icon">👥</span>
+                <h3>Smart Referral System</h3>
+                <p>Build your network and earn exponential rewards through our intelligent referral infrastructure.</p>
+            </div>
+            <div class="ecosystem-card">
+                <span class="ecosystem-icon">🎁</span>
+                <h3>Daily Reward Mechanics</h3>
+                <p>Consistent rewards with our streak-based system that values your long-term commitment.</p>
+            </div>
+            <div class="ecosystem-card">
+                <span class="ecosystem-icon">🏆</span>
+                <h3>Global Leaderboards</h3>
+                <p>Compete with elite miners worldwide and earn exclusive bonuses for top performances.</p>
+            </div>
+            <div class="ecosystem-card">
+                <span class="ecosystem-icon">📊</span>
+                <h3>Advanced Analytics</h3>
+                <p>Real-time insights and comprehensive data visualization for optimal mining strategies.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Roadmap Section -->
+    <section id="roadmap">
+        <div class="section-header">
+            <span class="section-label">ROADMAP</span>
+            <h2 class="section-title">Our Journey</h2>
+            <p class="section-description">Strategic milestones in revolutionizing cryptocurrency mining</p>
+        </div>
+        <div class="roadmap">
+            <div class="roadmap-item">
+                <div class="roadmap-content">
+                    <span class="roadmap-quarter">Q1 2024</span>
+                    <h3>Platform Foundation</h3>
+                    <ul>
+                        <li>Mobile application launch (iOS & Android)</li>
+                        <li>Core mining infrastructure deployment</li>
+                        <li>User authentication & security framework</li>
+                        <li>Initial referral system integration</li>
+                    </ul>
+                </div>
+                <div class="roadmap-dot"></div>
+            </div>
+            
+            <div class="roadmap-item">
+                <div class="roadmap-content">
+                    <span class="roadmap-quarter">Q2 2024</span>
+                    <h3>Feature Enhancement</h3>
+                    <ul>
+                        <li>Advanced daily rewards mechanism</li>
+                        <li>Real-time global leaderboard</li>
+                        <li>Comprehensive analytics dashboard</li>
+                        <li>Multi-language platform support</li>
+                    </ul>
+                </div>
+                <div class="roadmap-dot"></div>
+            </div>
+            
+            <div class="roadmap-item">
+                <div class="roadmap-content">
+                    <span class="roadmap-quarter">Q3 2024</span>
+                    <h3>Token Generation Event</h3>
+                    <ul>
+                        <li>ARC token mainnet launch</li>
+                        <li>Strategic airdrop campaign</li>
+                        <li>Major exchange partnerships</li>
+                        <li>Staking infrastructure rollout</li>
+                    </ul>
+                </div>
+                <div class="roadmap-dot"></div>
+            </div>
+            
+            <div class="roadmap-item">
+                <div class="roadmap-content">
+                    <span class="roadmap-quarter">Q4 2024</span>
+                    <h3>Ecosystem Expansion</h3>
+                    <ul>
+                        <li>DeFi protocol integrations</li>
+                        <li>NFT marketplace launch</li>
+                        <li>Strategic partnership announcements</li>
+                        <li>Community governance implementation</li>
+                    </ul>
+                </div>
+                <div class="roadmap-dot"></div>
+            </div>
+            
+            <div class="roadmap-item">
+                <div class="roadmap-content">
+                    <span class="roadmap-quarter">2025 & Beyond</span>
+                    <h3>Global Dominance</h3>
+                    <ul>
+                        <li>Web3 wallet integration suite</li>
+                        <li>Cross-chain interoperability</li>
+                        <li>Enterprise mining solutions</li>
+                        <li>Metaverse infrastructure deployment</li>
+                    </ul>
+                </div>
+                <div class="roadmap-dot"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Tokenomics Section -->
+    <section id="tokenomics">
+        <div class="section-header">
+            <span class="section-label">TOKENOMICS</span>
+            <h2 class="section-title">Token Distribution</h2>
+            <p class="section-description">Transparent and sustainable economic model designed for long-term growth</p>
+        </div>
+        <div class="tokenomics-grid">
+            <div class="token-card">
+                <div class="token-value">1B</div>
+                <div class="token-label">Total Supply</div>
+            </div>
+            <div class="token-card">
+                <div class="token-value">40%</div>
+                <div class="token-label">Mining Rewards</div>
+            </div>
+            <div class="token-card">
+                <div class="token-value">20%</div>
+                <div class="token-label">Team & Development</div>
+            </div>
+            <div class="token-card">
+                <div class="token-value">15%</div>
+                <div class="token-label">Ecosystem Growth</div>
+            </div>
+            <div class="token-card">
+                <div class="token-value">10%</div>
+                <div class="token-label">Marketing & Airdrops</div>
+            </div>
+            <div class="token-card">
+                <div class="token-value">10%</div>
+                <div class="token-label">Liquidity Pool</div>
+            </div>
+            <div class="token-card">
+                <div class="token-value">5%</div>
+                <div class="token-label">Advisors & Partners</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Blog Section -->
+    <section id="blog">
+        <div class="section-header">
+            <span class="section-label">BLOG</span>
+            <h2 class="section-title">Latest Insights</h2>
+            <p class="section-description">Stay informed with cutting-edge developments and strategic announcements</p>
+        </div>
+        <div class="blog-grid">
+            <a href="#" class="blog-card">
+                <div class="blog-image">📱</div>
+                <div class="blog-body">
+                    <div class="blog-date">DECEMBER 15, 2024</div>
+                    <h3>Arc Astra Mobile Platform Launches Globally</h3>
+                    <p>Revolutionary mining application debuts across iOS and Android ecosystems, marking a new era in accessible cryptocurrency mining.</p>
+                </div>
+            </a>
+            <a href="#" class="blog-card">
+                <div class="blog-image">🚀</div>
+                <div class="blog-body">
+                    <div class="blog-date">DECEMBER 10, 2024</div>
+                    <h3>Next-Gen Mining Algorithm Deployed</h3>
+                    <p>Experience unprecedented efficiency with our latest proprietary algorithm optimization, delivering 40% performance enhancement.</p>
+                </div>
+            </a>
+            <a href="#" class="blog-card">
+                <div class="blog-image">💎</div>
+                <div class="blog-body">
+                    <div class="blog-date">DECEMBER 5, 2024</div>
+                    <h3>Strategic Partnership Expansion</h3>
+                    <p>Arc Astra forges alliances with industry-leading blockchain pioneers to accelerate ecosystem development.</p>
+                </div>
+            </a>
+        </div>
+    </section>
+    
+    <!-- Documents Section -->
+    <section id="documents">
+        <div class="section-header">
+            <span class="section-label">DOCUMENTATION</span>
+            <h2 class="section-title">Technical Resources</h2>
+            <p class="section-description">Comprehensive documentation detailing our technology and vision</p>
+        </div>
+        <div class="documents-grid">
+            <div class="document-card">
+                <div class="document-icon">📄</div>
+                <h3>Whitepaper</h3>
+                <p>In-depth technical analysis covering platform architecture, cryptographic protocols, and long-term strategic vision.</p>
+                <a href="#" class="btn-download">Download PDF</a>
+            </div>
+            <div class="document-card">
+                <div class="document-icon">📋</div>
+                <h3>Litepaper</h3>
+                <p>Concise executive overview of Arc Astra's core innovations, tokenomics model, and market positioning.</p>
+                <a href="#" class="btn-download">Download PDF</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about">
+        <div class="section-header">
+            <span class="section-label">ABOUT US</span>
+            <h2 class="section-title">Building Tomorrow</h2>
+            <p class="section-description">Pioneering the future of decentralized mining infrastructure</p>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Arc Astra represents the convergence of cutting-edge blockchain technology and sophisticated user experience design. Our mission transcends traditional cryptocurrency mining—we're democratizing access to digital asset generation while maintaining institutional-grade security and performance.</p>
+                
+                <p>Founded by a collective of blockchain architects, cryptography experts, and visionary entrepreneurs, Arc Astra leverages proprietary algorithms to deliver unprecedented mining efficiency. We believe in radical transparency, uncompromising security, and community-driven evolution.</p>
+                
+                <p>With a rapidly expanding global community spanning over 100 countries, Arc Astra has emerged as a transformative force in the cryptocurrency mining landscape. Our platform empowers millions to participate in the blockchain revolution, regardless of technical expertise or initial investment.</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">1M+</div>
+                    <div class="stat-label">Active Miners</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50M+</div>
+                    <div class="stat-label">Tokens Generated</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Expert Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="section-header">
+            <span class="section-label">CONTACT</span>
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-description">Connect with our team for partnerships, support, or inquiries</p>
+        </div>
+        <div class="contact-container">
+            <form class="contact-form" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" required placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Subject</label>
+                    <input type="text" required placeholder="How can we help?">
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea required placeholder="Tell us more about your inquiry..."></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo">Arc Astra</div>
+                <p>Next-generation cryptocurrency mining platform engineered for the future of decentralized finance. Join the revolution.</p>
+                <div class="social-links">
+                    <a href="https://x.com/arcastranetwork" target="_blank" class="social-icon" title="X">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                    <a href="https://instagram.com/arcastranetwork" target="_blank" class="social-icon" title="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                    <a href="https://facebook.com/arcastranetwork" target="_blank" class="social-icon" title="Facebook">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <a href="https://youtube.com/@arcastranetwork" target="_blank" class="social-icon" title="YouTube">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                    </a>
+                    <a href="https://t.me/arcastranetwork" target="_blank" class="social-icon" title="Telegram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Platform</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#ecosystem">Ecosystem</a></li>
+                    <li><a href="#roadmap">Roadmap</a></li>
+                    <li><a href="#tokenomics">Tokenomics</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul class="footer-links">
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#documents">Whitepaper</a></li>
+                    <li><a href="#documents">Litepaper</a></li>
+                    <li><a href="#about">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul class="footer-links">
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Arc Astra. All rights reserved. Built for the future of decentralized finance.</p>
+        </div>
+    </footer>
+    
+    <script>
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.getElementById('navLinks').classList.remove('active');
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        function handleSubmit(event) {
+            event.preventDefault();
+            alert('Thank you for your message. Our team will respond within 24 hours.');
+            event.target.reset();
+        }
+        
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(10, 14, 26, 0.95)';
+            } else {
+                nav.style.background = 'rgba(10, 14, 26, 0.8)';
+            }
+        });
+    </script>
+</body>
+</html>
