@@ -1,363 +1,221 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Arc Astra</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arc Astra | Official Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #050b18; 
+            --accent: #00f2ff; /* Görseldeki neon mavi */
+            --card-bg: rgba(13, 26, 45, 0.6);
+            --text-white: #ffffff;
+            --text-gray: #a0aec0;
+            --border: rgba(0, 242, 255, 0.3);
+        }
 
-  <style>
-    :root {
-      --bg-main: linear-gradient(135deg, #0a1929 0%, #001e3c 100%);
-      --bg-card: rgba(10, 20, 40, 0.88);
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            font-family: 'Inter', -apple-system, sans-serif;
+            overflow-x: hidden;
+        }
 
-      --border-gradient: linear-gradient(
-        145deg,
-        rgba(0,255,255,0.35),
-        rgba(123,67,255,0.35)
-      );
+        /* --- NAVİGASYON (TÜM BAŞLIKLAR BURADA) --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(5, 11, 24, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+            z-index: 9999;
+        }
 
-      --accent-cyan: #00ffff;
-      --accent-blue: #0096ff;
-      --accent-purple: #8b5cf6;
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
 
-      --text-main: #ffffff;
-      --text-soft: #c4b5fd;
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
-      --radius-lg: 24px;
-      --radius-md: 16px;
-      --max-width: 1200px;
-    }
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-gray);
+            font-size: 11px; /* Çok başlık olduğu için biraz küçülttük */
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: 0.3s;
+            letter-spacing: 1px;
+        }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg-main);
-      color: var(--text-main);
-      min-height: 100vh;
-    }
+        .nav-links a:hover {
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent);
+        }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #0a1f3d 0%, #050b18 100%);
+            padding-top: 80px;
+        }
 
-    /* ---------- HEADER ---------- */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(10,20,40,0.95);
-      border-bottom: 1px solid rgba(0,255,255,0.2);
-      backdrop-filter: blur(12px);
-    }
+        .hero h1 {
+            font-size: 4rem;
+            margin: 0;
+            letter-spacing: -1px;
+            background: linear-gradient(to bottom, #fff 40%, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    .nav {
-      max-width: var(--max-width);
-      margin: auto;
-      padding: 16px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+        .hero p {
+            color: var(--text-gray);
+            max-width: 700px;
+            margin: 20px 0 40px;
+            font-size: 1.1rem;
+        }
 
-    .logo {
-      font-size: 20px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      color: var(--accent-cyan);
-    }
+        /* --- BUTONLAR --- */
+        .download-area {
+            display: flex;
+            gap: 20px;
+        }
 
-    .menu {
-      display: flex;
-      gap: 18px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-soft);
-    }
+        .store-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 12px 25px;
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.3s;
+        }
 
-    .menu a:hover {
-      color: var(--accent-cyan);
-    }
+        .store-btn:hover {
+            background: var(--accent);
+            color: var(--bg-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 242, 255, 0.2);
+        }
 
-    /* ---------- HERO ---------- */
-    .hero {
-      max-width: var(--max-width);
-      margin: auto;
-      padding: 80px 24px 60px;
-      text-align: center;
-    }
+        .store-btn i { font-size: 24px; }
 
-    .hero h1 {
-      font-size: 46px;
-      font-weight: 900;
-      margin-bottom: 14px;
-    }
+        /* --- FOOTER & SOCIAL --- */
+        footer {
+            padding: 50px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            background: #03070f;
+        }
 
-    .hero p {
-      color: var(--text-soft);
-      max-width: 680px;
-      margin: auto;
-      line-height: 1.6;
-    }
+        .social-icons {
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
 
-    .store-buttons {
-      margin-top: 32px;
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+        .social-icons a {
+            color: white;
+            font-size: 22px;
+            width: 45px;
+            height: 45px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
 
-    .store-btn {
-      padding: 14px 24px;
-      border-radius: var(--radius-md);
-      background: linear-gradient(135deg, #00ffff, #0096ff);
-      color: #000;
-      font-weight: 800;
-      box-shadow: 0 8px 24px rgba(0,150,255,0.35);
-    }
+        .social-icons a:hover {
+            background: var(--accent);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px var(--accent);
+        }
 
-    /* ---------- SECTIONS ---------- */
-    section {
-      max-width: var(--max-width);
-      margin: auto;
-      padding: 60px 24px;
-    }
-
-    section h2 {
-      font-size: 24px;
-      margin-bottom: 24px;
-      color: var(--accent-cyan);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background: var(--bg-card);
-      border-radius: var(--radius-lg);
-      padding: 28px;
-      border: 2px solid transparent;
-      background:
-        linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
-        var(--border-gradient) border-box;
-      box-shadow:
-        0 0 30px rgba(0,255,255,0.18),
-        0 10px 40px rgba(0,0,0,0.45);
-    }
-
-    .card h3 {
-      margin-bottom: 10px;
-    }
-
-    .card p {
-      color: var(--text-soft);
-      line-height: 1.6;
-      font-size: 14px;
-    }
-
-    /* ---------- DOCS ---------- */
-    .doc-btn {
-      margin-top: 14px;
-      display: inline-block;
-      padding: 10px 18px;
-      border-radius: 12px;
-      border: 1px solid rgba(0,255,255,0.4);
-      color: var(--accent-cyan);
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    /* ---------- FOOTER ---------- */
-    footer {
-      background: rgba(10,20,40,0.95);
-      border-top: 1px solid rgba(0,255,255,0.2);
-      padding: 40px 24px;
-      margin-top: 60px;
-    }
-
-    .footer-inner {
-      max-width: var(--max-width);
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 18px;
-    }
-
-    .socials {
-      display: flex;
-      gap: 14px;
-    }
-
-    .social {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      border: 1px solid rgba(0,255,255,0.35);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      color: var(--accent-cyan);
-    }
-
-    .social:hover {
-      box-shadow: 0 0 15px rgba(0,255,255,0.4);
-    }
-
-    .footer-text {
-      font-size: 12px;
-      color: var(--text-soft);
-    }
-  </style>
+        @media (max-width: 1024px) {
+            .nav-links { display: none; } /* Mobilde menü için bir hamburger ikon gerekecektir */
+        }
+    </style>
 </head>
-
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="nav">
-      <div class="logo">ARC ASTRA</div>
-      <nav class="menu">
-        <a href="#home">HOME</a>
-        <a href="#ecosystem">ECOSYSTEM</a>
-        <a href="#roadmap">ROADMAP</a>
-        <a href="#tokenomic">TOKENOMIC</a>
-        <a href="#blog">BLOG</a>
-        <a href="#docs">DOCS</a>
-        <a href="#about">ABOUT</a>
-        <a href="#contact">CONTACT</a>
-      </nav>
-    </div>
-  </header>
+    <header>
+        <nav>
+            <div class="logo">ARC ASTRA</div>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Ecosystem</a></li>
+                <li><a href="#">Roadmap</a></li>
+                <li><a href="#">Tokenomic</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Whitepaper</a></li>
+                <li><a href="#">Litepaper</a></li>
+                <li><a href="#">Onepager</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <!-- HERO -->
-  <div id="home" class="hero">
-    <h1>Next-Generation Digital Ecosystem</h1>
-    <p>
-      A clean, secure and scalable digital infrastructure designed for modern
-      applications and global adoption.
-    </p>
+    <section class="hero">
+        <h1>ARC ASTRA ECOSYSTEM</h1>
+        <p>A premium gateway to the decentralized future. Secure, scalable, and community-driven.</p>
+        
+        <div class="download-area">
+            <a href="#" class="store-btn">
+                <i class="fab fa-google-play"></i>
+                <div><small>Get it on</small><br>Google Play</div>
+            </a>
+            <a href="#" class="store-btn">
+                <i class="fab fa-apple"></i>
+                <div><small>Download on the</small><br>App Store</div>
+            </a>
+        </div>
+    </section>
 
-    <div class="store-buttons">
-      <div class="store-btn">Google Play</div>
-      <div class="store-btn">App Store</div>
-    </div>
-  </div>
-
-  <!-- ECOSYSTEM -->
-  <section id="ecosystem">
-    <h2>ECOSYSTEM</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>Infrastructure</h3>
-        <p>Robust and scalable architecture built for long-term sustainability.</p>
-      </div>
-      <div class="card">
-        <h3>User Control</h3>
-        <p>Simple and transparent experience focused on trust and usability.</p>
-      </div>
-      <div class="card">
-        <h3>Interoperability</h3>
-        <p>Designed to integrate smoothly across digital platforms.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ROADMAP -->
-  <section id="roadmap">
-    <h2>ROADMAP</h2>
-    <div class="grid">
-      <div class="card"><h3>Phase 1</h3><p>Foundation & public launch.</p></div>
-      <div class="card"><h3>Phase 2</h3><p>Ecosystem growth & integrations.</p></div>
-      <div class="card"><h3>Phase 3</h3><p>Scaling & long-term expansion.</p></div>
-    </div>
-  </section>
-
-  <!-- TOKENOMIC -->
-  <section id="tokenomic">
-    <h2>TOKENOMIC</h2>
-    <div class="grid">
-      <div class="card"><h3>Total Supply</h3><p>TBD</p></div>
-      <div class="card"><h3>Utility</h3><p>Payments & ecosystem access.</p></div>
-      <div class="card"><h3>Distribution</h3><p>Transparent and balanced model.</p></div>
-    </div>
-  </section>
-
-  <!-- BLOG -->
-  <section id="blog">
-    <h2>BLOG</h2>
-    <div class="grid">
-      <div class="card"><h3>Project Update</h3><p>Latest development insights.</p></div>
-      <div class="card"><h3>Announcement</h3><p>Important ecosystem news.</p></div>
-    </div>
-  </section>
-
-  <!-- DOCS -->
-  <section id="docs">
-    <h2>DOCUMENTS</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>Whitepaper</h3>
-        <p>Technical and strategic overview.</p>
-        <span class="doc-btn">Open</span>
-      </div>
-      <div class="card">
-        <h3>Litepaper</h3>
-        <p>Simplified explanation.</p>
-        <span class="doc-btn">Open</span>
-      </div>
-      <div class="card">
-        <h3>Onepager</h3>
-        <p>Quick project summary.</p>
-        <span class="doc-btn">Open</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <h2>ABOUT US</h2>
-    <div class="card">
-      <p>
-        Arc Astra focuses on building a premium digital ecosystem with clarity,
-        security and long-term vision.
-      </p>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <h2>CONTACT</h2>
-    <div class="card">
-      <p>Email: contact@arcastra.com</p>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-inner">
-      <div class="socials">
-        <div class="social">X</div>
-        <div class="social">IG</div>
-        <div class="social">FB</div>
-        <div class="social">YT</div>
-        <div class="social">TG</div>
-      </div>
-      <div class="footer-text">
-        © 2025 Arc Astra. All rights reserved.
-      </div>
-    </div>
-  </footer>
+    <footer>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-x-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-telegram-plane"></i></a>
+        </div>
+        <p style="color: var(--text-gray); font-size: 13px;">&copy; 2025 Arc Astra Project. All Rights Reserved.</p>
+    </footer>
 
 </body>
 </html>
