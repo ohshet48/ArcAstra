@@ -3,28 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arc Astra | Official Website</title>
+    <title>Ecosystem | Arc Astra</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --bg-dark: #050b18; 
-            --accent: #00f2ff; /* Görseldeki neon mavi */
+            --accent: #00f2ff;
             --card-bg: rgba(13, 26, 45, 0.6);
             --text-white: #ffffff;
             --text-gray: #a0aec0;
             --border: rgba(0, 242, 255, 0.3);
         }
 
-        body {
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
             background-color: var(--bg-dark);
             color: var(--text-white);
             font-family: 'Inter', -apple-system, sans-serif;
             overflow-x: hidden;
         }
 
-        /* --- NAVİGASYON (TÜM BAŞLIKLAR BURADA) --- */
         header {
             position: fixed;
             top: 0;
@@ -45,19 +48,30 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-size: 22px;
-            font-weight: 800;
-            color: var(--accent);
+            font-weight: 600;
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: linear-gradient(180deg, #00e5ff 0%, #00bcd4 40%, #5e72e4 70%, #7c5cdb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 4px;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 35px;
+            width: auto;
         }
 
         .nav-links {
             display: flex;
             gap: 15px;
             list-style: none;
-            margin: 0;
-            padding: 0;
         }
 
         .nav-links a {
@@ -75,98 +89,91 @@
             text-shadow: 0 0 10px var(--accent);
         }
 
-        /* --- HERO SECTION --- */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: radial-gradient(circle at center, #0a1f3d 0%, #050b18 100%);
-            padding-top: 80px;
+        .page-content {
+            min-height: 100vh;
+            padding: 120px 5% 60px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .hero h1 {
-            font-size: 4rem;
-            margin: 0;
-            letter-spacing: -1px;
-            background: linear-gradient(to bottom, #fff 40%, var(--accent));
+        .page-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(180deg, #00e5ff 0%, #00bcd4 40%, #5e72e4 70%, #7c5cdb 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .hero p {
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .section p {
             color: var(--text-gray);
-            max-width: 700px;
-            margin: 20px 0 40px;
-            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
         }
 
-        /* --- BUTONLAR --- */
-        .download-area {
-            display: flex;
-            gap: 20px;
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
         }
 
-        .store-btn {
+        .feature-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            padding: 12px 25px;
-            border-radius: 10px;
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            border-radius: 15px;
+            padding: 30px;
             transition: 0.3s;
         }
 
-        .store-btn:hover {
-            background: var(--accent);
-            color: var(--bg-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 242, 255, 0.2);
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 242, 255, 0.2);
         }
 
-        .store-btn i { font-size: 24px; }
+        .feature-card i {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
 
-        /* --- FOOTER & SOCIAL --- */
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-white);
+        }
+
+        .feature-card p {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
         footer {
-            padding: 50px 0;
+            padding: 30px 0;
             text-align: center;
             border-top: 1px solid var(--border);
             background: #03070f;
         }
 
-        .social-icons {
-            margin-bottom: 25px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
+        footer p {
+            color: var(--text-gray);
+            font-size: 13px;
         }
 
-        .social-icons a {
-            color: white;
-            font-size: 22px;
-            width: 45px;
-            height: 45px;
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: 0.3s;
-        }
-
-        .social-icons a:hover {
-            background: var(--accent);
-            color: var(--bg-dark);
-            box-shadow: 0 0 15px var(--accent);
-        }
-
-        @media (max-width: 1024px) {
-            .nav-links { display: none; } /* Mobilde menü için bir hamburger ikon gerekecektir */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .page-title { font-size: 2rem; }
+            .section h2 { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -174,46 +181,73 @@
 
     <header>
         <nav>
-            <div class="logo">ARC ASTRA</div>
+            <a href="index.html" class="logo">
+                <span>ARC ASTRA</span>
+            </a>
             <ul class="nav-links">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Ecosystem</a></li>
-                <li><a href="#">Roadmap</a></li>
-                <li><a href="#">Tokenomic</a></li>
-                <li><a href="#">Whitepaper</a></li>
-                <li><a href="#">Litepaper</a></li>
-                <li><a href="#">Onepager</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="ecosystem.html">Ecosystem</a></li>
+                <li><a href="roadmap.html">Roadmap</a></li>
+                <li><a href="tokenomic.html">Tokenomic</a></li>
+                <li><a href="whitepaper.html">Whitepaper</a></li>
+                <li><a href="litepaper.html">Litepaper</a></li>
+                <li><a href="onepager.html">Onepager</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <section class="hero">
-        <h1>ARC ASTRA ECOSYSTEM</h1>
-        <p>A premium gateway to the decentralized future. Secure, scalable, and community-driven.</p>
+    <div class="page-content">
+        <h1 class="page-title">Arc Astra Ecosystem</h1>
         
-        <div class="download-area">
-            <a href="#" class="store-btn">
-                <i class="fab fa-google-play"></i>
-                <div><small>Get it on</small><br>Google Play</div>
-            </a>
-            <a href="#" class="store-btn">
-                <i class="fab fa-apple"></i>
-                <div><small>Download on the</small><br>App Store</div>
-            </a>
+        <div class="section">
+            <h2>Our Vision</h2>
+            <p>Arc Astra is building a comprehensive decentralized ecosystem that empowers users to participate in the future of blockchain technology. Our platform combines cutting-edge mining technology, secure wallet solutions, and seamless cryptocurrency transactions.</p>
+            <p>We believe in creating accessible, transparent, and community-driven solutions that bridge the gap between traditional finance and decentralized systems.</p>
         </div>
-    </section>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>Mobile Mining</h3>
+                <p>Innovative mobile mining technology that allows users to earn cryptocurrency directly from their smartphones with optimized battery and performance management.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-wallet"></i>
+                <h3>Secure Wallet</h3>
+                <p>Multi-layer security wallet system with biometric authentication, ensuring your assets are protected with military-grade encryption.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-exchange-alt"></i>
+                <h3>Instant Transactions</h3>
+                <p>Lightning-fast transaction processing with minimal fees, powered by our optimized blockchain infrastructure.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-users"></i>
+                <h3>Referral System</h3>
+                <p>Earn additional rewards by inviting friends and building your network. Multi-tier referral program with unlimited earning potential.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-trophy"></i>
+                <h3>Leaderboards</h3>
+                <p>Compete with miners worldwide and climb the ranks to earn exclusive rewards and recognition in the Arc Astra community.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>DeFi Integration</h3>
+                <p>Seamlessly interact with decentralized finance protocols, staking, and liquidity pools directly from the Arc Astra platform.</p>
+            </div>
+        </div>
+    </div>
 
     <footer>
-        <div class="social-icons">
-            <a href="#"><i class="fab fa-x-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-telegram-plane"></i></a>
-        </div>
-        <p style="color: var(--text-gray); font-size: 13px;">&copy; 2025 Arc Astra Project. All Rights Reserved.</p>
+        <p>&copy; 2025 Arc Astra Project. All Rights Reserved.</p>
     </footer>
 
 </body>
