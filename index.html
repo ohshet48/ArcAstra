@@ -23,6 +23,78 @@
             font-family: 'Inter', -apple-system, sans-serif;
             overflow-x: hidden;
             scroll-behavior: smooth;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 242, 255, 0.6) 2px, transparent 2px),
+                radial-gradient(circle at 80% 10%, rgba(0, 242, 255, 0.6) 2px, transparent 2px),
+                radial-gradient(circle at 50% 50%, rgba(94, 114, 228, 0.6) 2px, transparent 2px),
+                radial-gradient(circle at 90% 60%, rgba(94, 114, 228, 0.6) 2px, transparent 2px),
+                radial-gradient(circle at 30% 80%, rgba(124, 92, 219, 0.6) 2px, transparent 2px),
+                radial-gradient(circle at 70% 90%, rgba(124, 92, 219, 0.6) 2px, transparent 2px),
+                radial-gradient(circle at 20% 50%, rgba(0, 242, 255, 0.6) 2px, transparent 2px),
+                radial-gradient(circle at 85% 85%, rgba(94, 114, 228, 0.6) 2px, transparent 2px),
+                radial-gradient(circle at 15% 60%, rgba(0, 242, 255, 0.6) 2px, transparent 2px),
+                radial-gradient(circle at 60% 25%, rgba(94, 114, 228, 0.6) 2px, transparent 2px);
+            background-size: 100% 100%;
+            background-position: 0 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(135deg, transparent 10%, rgba(0, 242, 255, 0.08) 10.5%, transparent 11%),
+                linear-gradient(45deg, transparent 20%, rgba(0, 242, 255, 0.08) 20.5%, transparent 21%),
+                linear-gradient(160deg, transparent 50%, rgba(94, 114, 228, 0.08) 50.5%, transparent 51%),
+                linear-gradient(70deg, transparent 30%, rgba(94, 114, 228, 0.08) 30.5%, transparent 31%),
+                linear-gradient(115deg, transparent 80%, rgba(124, 92, 219, 0.08) 80.5%, transparent 81%),
+                linear-gradient(25deg, transparent 70%, rgba(124, 92, 219, 0.08) 70.5%, transparent 71%),
+                linear-gradient(95deg, transparent 15%, rgba(0, 242, 255, 0.06) 15.5%, transparent 16%),
+                linear-gradient(145deg, transparent 60%, rgba(94, 114, 228, 0.06) 60.5%, transparent 61%);
+            background-size: 100% 100%;
+            animation: networkWave 15s ease-in-out infinite;
+            opacity: 1;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        header, section, footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes networkWave {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0.6;
+            }
+            25% {
+                transform: translate(10px, -10px) rotate(1deg);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translate(-5px, 5px) rotate(-0.5deg);
+                opacity: 0.5;
+            }
+            75% {
+                transform: translate(8px, 8px) rotate(0.5deg);
+                opacity: 0.7;
+            }
         }
 
         header {
@@ -167,73 +239,17 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: radial-gradient(circle at center, #0a1f3d 0%, #050b18 100%);
+            background: 
+                radial-gradient(circle at center, rgba(10, 31, 61, 0.8) 0%, transparent 100%),
+                linear-gradient(to bottom, transparent 0%, transparent 70%, var(--bg-dark) 100%);
             padding-top: 80px;
             position: relative;
             overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(0, 242, 255, 0.6) 2px, transparent 2px),
-                radial-gradient(circle at 80% 10%, rgba(0, 242, 255, 0.6) 2px, transparent 2px),
-                radial-gradient(circle at 50% 50%, rgba(94, 114, 228, 0.6) 2px, transparent 2px),
-                radial-gradient(circle at 90% 60%, rgba(94, 114, 228, 0.6) 2px, transparent 2px),
-                radial-gradient(circle at 30% 80%, rgba(124, 92, 219, 0.6) 2px, transparent 2px),
-                radial-gradient(circle at 70% 90%, rgba(124, 92, 219, 0.6) 2px, transparent 2px),
-                radial-gradient(circle at 20% 50%, rgba(0, 242, 255, 0.6) 2px, transparent 2px),
-                radial-gradient(circle at 85% 85%, rgba(94, 114, 228, 0.6) 2px, transparent 2px);
-            background-size: 100% 100%;
-            background-position: 0 0;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                linear-gradient(135deg, transparent 10%, rgba(0, 242, 255, 0.08) 10.5%, transparent 11%),
-                linear-gradient(45deg, transparent 20%, rgba(0, 242, 255, 0.08) 20.5%, transparent 21%),
-                linear-gradient(160deg, transparent 50%, rgba(94, 114, 228, 0.08) 50.5%, transparent 51%),
-                linear-gradient(70deg, transparent 30%, rgba(94, 114, 228, 0.08) 30.5%, transparent 31%),
-                linear-gradient(115deg, transparent 80%, rgba(124, 92, 219, 0.08) 80.5%, transparent 81%),
-                linear-gradient(25deg, transparent 70%, rgba(124, 92, 219, 0.08) 70.5%, transparent 71%);
-            background-size: 100% 100%;
-            animation: networkWave 15s ease-in-out infinite;
-            opacity: 1;
-        }
-
         .hero > * {
             position: relative;
             z-index: 1;
-        }
-
-        @keyframes networkWave {
-            0%, 100% {
-                transform: translate(0, 0) rotate(0deg);
-                opacity: 0.6;
-            }
-            25% {
-                transform: translate(10px, -10px) rotate(1deg);
-                opacity: 0.8;
-            }
-            50% {
-                transform: translate(-5px, 5px) rotate(-0.5deg);
-                opacity: 0.5;
-            }
-            75% {
-                transform: translate(8px, 8px) rotate(0.5deg);
-                opacity: 0.7;
-            }
         }
 
         .hero h1 {
