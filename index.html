@@ -34,16 +34,16 @@
             right: 0;
             bottom: 0;
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(0, 242, 255, 0.6) 2px, transparent 2px),
-                radial-gradient(circle at 80% 10%, rgba(0, 242, 255, 0.6) 2px, transparent 2px),
-                radial-gradient(circle at 50% 50%, rgba(94, 114, 228, 0.6) 2px, transparent 2px),
-                radial-gradient(circle at 90% 60%, rgba(94, 114, 228, 0.6) 2px, transparent 2px),
-                radial-gradient(circle at 30% 80%, rgba(124, 92, 219, 0.6) 2px, transparent 2px),
-                radial-gradient(circle at 70% 90%, rgba(124, 92, 219, 0.6) 2px, transparent 2px),
-                radial-gradient(circle at 20% 50%, rgba(0, 242, 255, 0.6) 2px, transparent 2px),
-                radial-gradient(circle at 85% 85%, rgba(94, 114, 228, 0.6) 2px, transparent 2px),
-                radial-gradient(circle at 15% 60%, rgba(0, 242, 255, 0.6) 2px, transparent 2px),
-                radial-gradient(circle at 60% 25%, rgba(94, 114, 228, 0.6) 2px, transparent 2px);
+                radial-gradient(circle at 10% 20%, rgba(0, 242, 255, 0.7) 2px, rgba(0, 242, 255, 0.2) 4px, transparent 8px),
+                radial-gradient(circle at 80% 10%, rgba(0, 242, 255, 0.7) 2px, rgba(0, 242, 255, 0.2) 4px, transparent 8px),
+                radial-gradient(circle at 50% 50%, rgba(94, 114, 228, 0.7) 2px, rgba(94, 114, 228, 0.2) 4px, transparent 8px),
+                radial-gradient(circle at 90% 60%, rgba(94, 114, 228, 0.7) 2px, rgba(94, 114, 228, 0.2) 4px, transparent 8px),
+                radial-gradient(circle at 30% 80%, rgba(124, 92, 219, 0.7) 2px, rgba(124, 92, 219, 0.2) 4px, transparent 8px),
+                radial-gradient(circle at 70% 90%, rgba(124, 92, 219, 0.7) 2px, rgba(124, 92, 219, 0.2) 4px, transparent 8px),
+                radial-gradient(circle at 20% 50%, rgba(0, 242, 255, 0.7) 2px, rgba(0, 242, 255, 0.2) 4px, transparent 8px),
+                radial-gradient(circle at 85% 85%, rgba(94, 114, 228, 0.7) 2px, rgba(94, 114, 228, 0.2) 4px, transparent 8px),
+                radial-gradient(circle at 15% 60%, rgba(0, 242, 255, 0.7) 2px, rgba(0, 242, 255, 0.2) 4px, transparent 8px),
+                radial-gradient(circle at 60% 25%, rgba(94, 114, 228, 0.7) 2px, rgba(94, 114, 228, 0.2) 4px, transparent 8px);
             background-size: 100% 100%;
             background-position: 0 0;
             pointer-events: none;
@@ -58,17 +58,16 @@
             right: 0;
             bottom: 0;
             background: 
-                linear-gradient(135deg, transparent 10%, rgba(0, 242, 255, 0.08) 10.5%, transparent 11%),
-                linear-gradient(45deg, transparent 20%, rgba(0, 242, 255, 0.08) 20.5%, transparent 21%),
-                linear-gradient(160deg, transparent 50%, rgba(94, 114, 228, 0.08) 50.5%, transparent 51%),
-                linear-gradient(70deg, transparent 30%, rgba(94, 114, 228, 0.08) 30.5%, transparent 31%),
-                linear-gradient(115deg, transparent 80%, rgba(124, 92, 219, 0.08) 80.5%, transparent 81%),
-                linear-gradient(25deg, transparent 70%, rgba(124, 92, 219, 0.08) 70.5%, transparent 71%),
-                linear-gradient(95deg, transparent 15%, rgba(0, 242, 255, 0.06) 15.5%, transparent 16%),
-                linear-gradient(145deg, transparent 60%, rgba(94, 114, 228, 0.06) 60.5%, transparent 61%);
+                linear-gradient(135deg, transparent calc(10% - 0.5px), rgba(0, 242, 255, 0.25) 10%, rgba(0, 242, 255, 0.25) calc(10% + 0.5px), transparent calc(10% + 1px)),
+                linear-gradient(45deg, transparent calc(20% - 0.5px), rgba(0, 242, 255, 0.25) 20%, rgba(0, 242, 255, 0.25) calc(20% + 0.5px), transparent calc(20% + 1px)),
+                linear-gradient(160deg, transparent calc(50% - 0.5px), rgba(94, 114, 228, 0.25) 50%, rgba(94, 114, 228, 0.25) calc(50% + 0.5px), transparent calc(50% + 1px)),
+                linear-gradient(70deg, transparent calc(30% - 0.5px), rgba(94, 114, 228, 0.25) 30%, rgba(94, 114, 228, 0.25) calc(30% + 0.5px), transparent calc(30% + 1px)),
+                linear-gradient(115deg, transparent calc(80% - 0.5px), rgba(124, 92, 219, 0.25) 80%, rgba(124, 92, 219, 0.25) calc(80% + 0.5px), transparent calc(80% + 1px)),
+                linear-gradient(25deg, transparent calc(70% - 0.5px), rgba(124, 92, 219, 0.25) 70%, rgba(124, 92, 219, 0.25) calc(70% + 0.5px), transparent calc(70% + 1px)),
+                linear-gradient(95deg, transparent calc(15% - 0.5px), rgba(0, 242, 255, 0.2) 15%, rgba(0, 242, 255, 0.2) calc(15% + 0.5px), transparent calc(15% + 1px)),
+                linear-gradient(145deg, transparent calc(60% - 0.5px), rgba(94, 114, 228, 0.2) 60%, rgba(94, 114, 228, 0.2) calc(60% + 0.5px), transparent calc(60% + 1px));
             background-size: 100% 100%;
             animation: networkWave 15s ease-in-out infinite;
-            opacity: 1;
             pointer-events: none;
             z-index: 0;
         }
@@ -81,19 +80,19 @@
         @keyframes networkWave {
             0%, 100% {
                 transform: translate(0, 0) rotate(0deg);
-                opacity: 0.6;
+                opacity: 0.4;
             }
             25% {
                 transform: translate(10px, -10px) rotate(1deg);
-                opacity: 0.8;
+                opacity: 1;
             }
             50% {
                 transform: translate(-5px, 5px) rotate(-0.5deg);
-                opacity: 0.5;
+                opacity: 0.3;
             }
             75% {
                 transform: translate(8px, 8px) rotate(0.5deg);
-                opacity: 0.7;
+                opacity: 0.9;
             }
         }
 
@@ -240,9 +239,10 @@
             align-items: center;
             text-align: center;
             background: 
-                radial-gradient(circle at center, rgba(10, 31, 61, 0.8) 0%, transparent 100%),
-                linear-gradient(to bottom, transparent 0%, transparent 70%, var(--bg-dark) 100%);
+                radial-gradient(circle at center, rgba(10, 31, 61, 0.6) 0%, transparent 100%),
+                linear-gradient(to bottom, transparent 0%, transparent 30%, rgba(5, 11, 24, 0.3) 50%, rgba(5, 11, 24, 0.7) 80%, var(--bg-dark) 100%);
             padding-top: 80px;
+            padding-bottom: 150px;
             position: relative;
             overflow: hidden;
         }
