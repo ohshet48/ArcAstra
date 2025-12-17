@@ -175,12 +175,14 @@
             font-size: 4rem;
             margin: 0;
             letter-spacing: -1px;
+        }
+
+        .hero h1 span {
             background: linear-gradient(180deg, #00e5ff 0%, #00bcd4 40%, #5e72e4 70%, #7c5cdb 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             display: inline-block;
-            white-space: nowrap;
         }
 
         .hero p {
@@ -456,16 +458,17 @@
         @media (max-width: 768px) {
             .hero h1 { 
                 font-size: 2rem;
+            }
+            .hero h1 span {
                 background: linear-gradient(180deg, #00e5ff 0%, #00bcd4 40%, #5e72e4 70%, #7c5cdb 100%);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
-                display: inline-block;
-                white-space: normal;
-                line-height: 1.2;
+                display: inline;
             }
             .section-title { font-size: 2rem; }
             .download-area { flex-direction: column; }
+            .tokenomic-chart { max-width: 600px !important; }
         }
     </style>
 </head>
@@ -497,7 +500,7 @@
     </header>
 
     <section id="home" class="hero">
-        <h1>ARC ASTRA ECOSYSTEM</h1>
+        <h1><span>ARC</span> <span>ASTRA</span> <span>ECOSYSTEM</span></h1>
         <p>A premium gateway to the decentralized future. Secure, scalable, and community-driven.</p>
         <div class="download-area">
             <a href="#" class="store-btn">
@@ -652,7 +655,7 @@
             </div>
 
             <!-- Single Circular Chart -->
-            <div style="max-width: 600px; margin: 0 auto 60px;">
+            <div style="max-width: 400px; margin: 0 auto 60px;" class="tokenomic-chart">
                 <div style="position: relative; width: 100%; padding-bottom: 100%; border-radius: 50%; background: conic-gradient(
                     from 0deg,
                     #00e5ff 0deg 288deg,
