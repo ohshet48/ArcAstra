@@ -559,6 +559,46 @@
             .tokenomic-chart { max-width: 600px !important; }
             .phone-mockup { max-width: 280px !important; }
         }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.7);
+            background: var(--card-bg);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 20px 40px;
+            box-shadow: 0 10px 40px rgba(0, 242, 255, 0.3);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 10000;
+            backdrop-filter: blur(10px);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .toast-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--text);
+        }
+
+        .toast-icon {
+            font-size: 24px;
+            color: var(--accent);
+        }
+
+        .toast-text {
+            font-size: 16px;
+            font-weight: 500;
+        }
         
         @media (min-width: 769px) {
             .phone-mockup { max-width: 380px !important; }
@@ -595,11 +635,11 @@
         <h1><span>ARC</span> <span>ASTRA</span> <span>ECOSYSTEM</span></h1>
         <p>A premium gateway to the decentralized future. Secure, scalable, and community-driven.</p>
         <div class="download-area">
-            <a href="#" class="store-btn">
+            <a href="#" class="store-btn" id="googlePlayBtn">
                 <i class="fab fa-google-play"></i>
                 <div><small>Get it on</small><br>Google Play</div>
             </a>
-            <a href="#" class="store-btn">
+            <a href="#" class="store-btn" id="appStoreBtn">
                 <i class="fab fa-apple"></i>
                 <div><small>Download on the</small><br>App Store</div>
             </a>
@@ -915,7 +955,36 @@
         </div>
     </section>
     
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <div class="toast-content">
+            <i class="fas fa-clock toast-icon"></i>
+            <span class="toast-text">Coming Soon</span>
+        </div>
+    </div>
+    
     <script>
+        // Toast notification function
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        // Store button click handlers
+        document.getElementById('googlePlayBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            showToast();
+        });
+
+        document.getElementById('appStoreBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            showToast();
+        });
+
+        // Contact form handler
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const message = document.getElementById('formMessage');
