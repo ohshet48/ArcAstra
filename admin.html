@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arc Astra - Admin Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #00ffff;
+            margin-bottom: 40px;
+            font-size: 36px;
+        }
+        
+        .panel {
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .panel h2 {
+            color: #00ffff;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            color: #8b5cf6;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #00ffff, #00d4d4);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 10px;
+            color: #0f172a;
+            font-weight: 800;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 255, 255, 0.4);
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .result.success {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid #10b981;
+            color: #10b981;
+        }
+        
+        .result.error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #ef4444;
+            color: #ef4444;
+        }
+        
+        .info-box {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #c4b5fd;
+        }
+        
+        .stat-card {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: #00ffff;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 13px;
+            color: #8b5cf6;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Arc Astra Admin Panel</h1>
+        
+        <!-- Admin Secret -->
+        <div class="panel">
+            <h2>🔑 Authentication</h2>
+            <div class="form-group">
+                <label>Admin Secret Key</label>
+                <input type="password" id="adminSecret" placeholder="Enter admin secret key">
+            </div>
+            <div class="info-box">
+                ℹ️ Default: <code>arc_admin_2025_secret_key</code>
+            </div>
+            <button onclick="loadStats()">🔓 Login & Load Stats</button>
+        </div>
+        
+        <!-- Simple Stats -->
+        <div class="panel" id="statsPanel" style="display: none;">
+            <h2>📊 Statistics</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalUsers">-</div>
+                    <div class="stat-label">Total Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="activeUsers">-</div>
+                    <div class="stat-label">Active Users (24h)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="inactiveUsers">-</div>
+                    <div class="stat-label">Inactive Users</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Send Airdrop -->
+        <div class="panel">
+            <h2>🎁 Send Airdrop</h2>
+            
+            <div class="form-group">
+                <label>User IDs (comma-separated)</label>
+                <input type="text" id="airdropUserIds" placeholder="user123,user456,user789">
+            </div>
+            
+            <div class="form-group">
+                <label>Airdrop Title</label>
+                <input type="text" id="airdropTitle" placeholder="Welcome Bonus">
+            </div>
+            
+            <div class="form-group">
+                <label>Amount (ARC)</label>
+                <input type="number" id="airdropAmount" placeholder="100">
+            </div>
+            
+            <div class="form-group">
+                <label>Description (Optional)</label>
+                <textarea id="airdropDescription" placeholder="Thank you for joining Arc Astra!"></textarea>
+            </div>
+            
+            <button onclick="sendAirdrop()">🎁 Send Airdrop</button>
+            
+            <div class="result" id="airdropResult"></div>
+        </div>
+        
+        <!-- Create Announcement -->
+        <div class="panel">
+            <h2>📢 Create Announcement</h2>
+            
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="announcementTitle" placeholder="Important Update">
+            </div>
+            
+            <div class="form-group">
+                <label>Content</label>
+                <textarea id="announcementContent" placeholder="We are excited to announce..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Priority</label>
+                <select id="announcementPriority">
+                    <option value="low">🔵 Low - Info</option>
+                    <option value="medium" selected>🟡 Medium - Notice</option>
+                    <option value="high">🔴 High - Important</option>
+                </select>
+            </div>
+            
+            <button onclick="createAnnouncement()">📢 Create Announcement</button>
+            
+            <div class="result" id="announcementResult"></div>
+        </div>
+    </div>
+    
+    <script>
+        const FUNCTIONS_BASE_URL = 'https://europe-west1-arcastra-eba62.cloudfunctions.net';
+        const API_KEY = 'arc_astra_mobile_2024_x7K9mP3qR8wL5nF2';
+        
+        function getHeaders() {
+            return {
+                'Content-Type': 'application/json',
+                'X-API-Key': API_KEY
+            };
+        }
+        
+        function showResult(elementId, message, isSuccess) {
+            const el = document.getElementById(elementId);
+            el.textContent = message;
+            el.className = 'result ' + (isSuccess ? 'success' : 'error');
+            el.style.display = 'block';
+        }
+        
+        async function loadStats() {
+            const adminSecret = document.getElementById('adminSecret').value;
+            
+            if (!adminSecret) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${FUNCTIONS_BASE_URL}/getAdminStats?adminSecret=${adminSecret}`, {
+                    headers: getHeaders()
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    const totalUsers = data.totalUsers;
+                    const activeUsers = data.activeSessions;
+                    const inactiveUsers = totalUsers - activeUsers;
+                    
+                    document.getElementById('totalUsers').textContent = totalUsers;
+                    document.getElementById('activeUsers').textContent = activeUsers;
+                    document.getElementById('inactiveUsers').textContent = inactiveUsers;
+                    
+                    // Show stats panel
+                    document.getElementById('statsPanel').style.display = 'block';
+                } else {
+                    alert('❌ Invalid admin secret');
+                }
+            } catch (error) {
+                alert('❌ Error loading stats: ' + error.message);
+            }
+        }
+        
+        async function sendAirdrop() {
+            const adminSecret = document.getElementById('adminSecret').value;
+            const userIdsInput = document.getElementById('airdropUserIds').value;
+            const title = document.getElementById('airdropTitle').value;
+            const amount = parseFloat(document.getElementById('airdropAmount').value);
+            const description = document.getElementById('airdropDescription').value;
+            
+            if (!adminSecret || !userIdsInput || !title || !amount) {
+                showResult('airdropResult', '❌ Please fill all required fields', false);
+                return;
+            }
+            
+            const userIds = userIdsInput.split(',').map(id => id.trim());
+            
+            showResult('airdropResult', '⏳ Sending airdrop...', true);
+            
+            try {
+                const response = await fetch(`${FUNCTIONS_BASE_URL}/sendAirdrop`, {
+                    method: 'POST',
+                    headers: getHeaders(),
+                    body: JSON.stringify({
+                        adminSecret: adminSecret,
+                        userIds: userIds,
+                        airdrop: {
+                            title: title,
+                            amount: amount,
+                            description: description
+                        }
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('airdropResult', `✅ ${data.message}`, true);
+                    // Clear form
+                    document.getElementById('airdropUserIds').value = '';
+                    document.getElementById('airdropTitle').value = '';
+                    document.getElementById('airdropAmount').value = '';
+                    document.getElementById('airdropDescription').value = '';
+                } else {
+                    showResult('airdropResult', `❌ ${data.error}`, false);
+                }
+            } catch (error) {
+                showResult('airdropResult', `❌ Error: ${error.message}`, false);
+            }
+        }
+        
+        async function createAnnouncement() {
+            const adminSecret = document.getElementById('adminSecret').value;
+            const title = document.getElementById('announcementTitle').value;
+            const content = document.getElementById('announcementContent').value;
+            const priority = document.getElementById('announcementPriority').value;
+            
+            if (!adminSecret || !title || !content) {
+                showResult('announcementResult', '❌ Please fill all required fields', false);
+                return;
+            }
+            
+            showResult('announcementResult', '⏳ Creating announcement...', true);
+            
+            try {
+                const response = await fetch(`${FUNCTIONS_BASE_URL}/createAnnouncement`, {
+                    method: 'POST',
+                    headers: getHeaders(),
+                    body: JSON.stringify({
+                        adminSecret: adminSecret,
+                        title: title,
+                        content: content,
+                        priority: priority
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('announcementResult', `✅ ${data.message}`, true);
+                    // Clear form
+                    document.getElementById('announcementTitle').value = '';
+                    document.getElementById('announcementContent').value = '';
+                } else {
+                    showResult('announcementResult', `❌ ${data.error}`, false);
+                }
+            } catch (error) {
+                showResult('announcementResult', `❌ Error: ${error.message}`, false);
+            }
+        }
+        
+        // Quick action functions
+        function sendWelcomeAirdrop() {
+            document.getElementById('airdropTitle').value = 'Welcome Bonus';
+            document.getElementById('airdropAmount').value = '100';
+            document.getElementById('airdropDescription').value = 'Thank you for joining Arc Astra! Enjoy your welcome bonus.';
+        }
+        
+        function sendEventAirdrop() {
+            document.getElementById('airdropTitle').value = 'Special Event Reward';
+            document.getElementById('airdropAmount').value = '50';
+            document.getElementById('airdropDescription').value = 'Congratulations! You received a special event reward.';
+        }
+        
+        function createSystemAnnouncement() {
+            document.getElementById('announcementTitle').value = 'System Maintenance';
+            document.getElementById('announcementContent').value = 'Scheduled maintenance on January 5, 2025 at 00:00 UTC. Expected downtime: 2 hours.';
+            document.getElementById('announcementPriority').value = 'high';
+        }
+        
+        function createUpdateAnnouncement() {
+            document.getElementById('announcementTitle').value = 'New Feature Released';
+            document.getElementById('announcementContent').value = 'We are excited to announce new features including improved mining rates and referral bonuses!';
+            document.getElementById('announcementPriority').value = 'medium';
+        }
+    </script>
+</body>
+</html>
