@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arc Astra - Virtual Token Collection Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #00ffff, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .tagline {
+            font-size: 24px;
+            margin-bottom: 40px;
+            color: #00ffff;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        .feature {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 30px 20px;
+            border-radius: 15px;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            transition: all 0.3s;
+        }
+        .feature:hover {
+            border-color: #00ffff;
+            transform: translateY(-5px);
+        }
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        .feature-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #00ffff;
+        }
+        .feature-desc {
+            font-size: 14px;
+            color: #8b5cf6;
+        }
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #00ffff, #00d4d4);
+            color: #0f172a;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 18px;
+            margin-top: 30px;
+            transition: all 0.3s;
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 Arc Astra</h1>
+        <p class="tagline">Virtual Token Collection & Simulation Game</p>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">⭐</div>
+                <div class="feature-title">Daily Rewards</div>
+                <div class="feature-desc">Collect virtual tokens every day</div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">👥</div>
+                <div class="feature-title">Invite Friends</div>
+                <div class="feature-desc">Grow your network and earn bonuses</div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">🏆</div>
+                <div class="feature-title">Leaderboard</div>
+                <div class="feature-desc">Compete with players worldwide</div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">📈</div>
+                <div class="feature-title">Level Up</div>
+                <div class="feature-desc">Progress through 20 levels</div>
+            </div>
+        </div>
+        
+        <p style="font-size: 18px; margin-top: 40px;">
+            Join thousands of players in this exciting idle simulation game!
+        </p>
+        
+        <a href="https://play.google.com/store" class="download-btn">
+            Download on Google Play
+        </a>
+    </div>
+</body>
+</html>
