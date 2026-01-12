@@ -209,8 +209,9 @@
                     countryStats[country] = (countryStats[country] || 0) + 1;
                 });
 
-                const twelveHoursAgo = new Date(Date.now() - (24 * 60 * 60 * 1000));
-                const activeSessionsSnapshot = await db.collection('miningSessions')
+                const twentyFourHoursAgo = new Date(Date.now() - (24 * 60 * 60 * 1000));
+                const activeSessionsSnapshot = await db
+                    .collection('miningSessions')
                     .where('startTime', '>', twentyFourHoursAgo)
                     .get();
                 
