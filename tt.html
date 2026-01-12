@@ -75,6 +75,17 @@
         #loginBox { max-width: 400px; margin: 100px auto; }
         #dashboard { display: none; }
         .error { color: red; text-align: center; margin-top: 10px; }
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 0, 0, 0.3);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -88,6 +99,7 @@
 
     <!-- Dashboard -->
     <div id="dashboard">
+        <button class="logout-btn" onclick="logout()">Çıkış</button>
         <h1>Arc Astra İstatistikleri</h1>
         
         <div class="loading" id="loading">Yükleniyor...</div>
@@ -103,6 +115,11 @@
                 <div class="stat-value" id="activeUsers">-</div>
             </div>
 
+            <div class="stat">
+                <div class="stat-title">Aktiflik Oranı</div>
+                <div class="stat-value" id="activeRate">-</div>
+            </div>
+
             <div class="country-list">
                 <div class="stat-title" style="margin-bottom: 20px;">Ülkelere Göre Kullanıcılar</div>
                 <div id="countries"></div>
@@ -110,9 +127,26 @@
         </div>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
     <script>
-        const API = 'https://europe-west1-arcastra.cloudfunctions.net/getAdminStats';
         const PASSWORD = 'arcastra2025admin';
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDe_cjESa1hQoGiabRoLO2Tmj6JrZVB9NY",
+            authDomain: "arcastra-eba62.firebaseapp.com",
+            projectId: "arcastra-eba62",
+            storageBucket: "arcastra-eba62.firebasestorage.app",
+            messagingSenderId: "547925747222",
+            appId: "1:547925747222:web:01a6b875fe14624d777737"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
         function login() {
             const pass = document.getElementById('password').value;
@@ -125,37 +159,81 @@
             loadData();
         }
 
+        function logout() {
+            document.getElementById('loginBox').style.display = 'block';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('password').value = '';
+            document.getElementById('error').textContent = '';
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('content').style.display = 'none';
+        }
+
         async function loadData() {
             try {
-                const response = await fetch(API, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ adminPassword: PASSWORD })
+                document.getElementById('loading').style.display = 'block';
+                document.getElementById('loading').textContent = 'Veriler yükleniyor...';
+
+                // Get all users from Firestore
+                const usersSnapshot = await db.collection('users').get();
+                
+                let totalUsers = 0;
+                let activeUsers = 0;
+                const countryStats = {};
+                
+                usersSnapshot.forEach(doc => {
+                    const user = doc.data();
+                    totalUsers++;
+                    
+                    // Check if user is active (mined in last 48 hours)
+                    if (user.lastMiningDate) {
+                        const lastMining = user.lastMiningDate.toDate ? user.lastMiningDate.toDate() : new Date(user.lastMiningDate);
+                        const hoursSinceLastMining = (Date.now() - lastMining.getTime()) / (1000 * 60 * 60);
+                        if (hoursSinceLastMining <= 48) {
+                            activeUsers++;
+                        }
+                    }
+                    
+                    // Count by country
+                    const country = user.country || 'Bilinmeyen';
+                    countryStats[country] = (countryStats[country] || 0) + 1;
                 });
 
-                const data = await response.json();
+                // Calculate active rate
+                const activeRate = totalUsers > 0 ? ((activeUsers / totalUsers) * 100).toFixed(1) : 0;
+
+                // Sort countries by count
+                const sortedCountries = Object.entries(countryStats)
+                    .sort((a, b) => b[1] - a[1])
+                    .map(([country, count]) => ({ country, count }));
+
+                // Display stats
+                document.getElementById('totalUsers').textContent = totalUsers.toLocaleString();
+                document.getElementById('activeUsers').textContent = activeUsers.toLocaleString();
+                document.getElementById('activeRate').textContent = activeRate + '%';
                 
-                document.getElementById('totalUsers').textContent = data.totalUsers;
-                document.getElementById('activeUsers').textContent = data.activeUsers;
-                
+                // Display countries
                 let countriesHTML = '';
-                data.countries.forEach(item => {
+                sortedCountries.forEach(item => {
                     countriesHTML += `
                         <div class="country-item">
                             <span>${item.country}</span>
-                            <span style="color: #00ffff; font-weight: bold;">${item.count}</span>
+                            <span style="color: #00ffff; font-weight: bold;">${item.count.toLocaleString()}</span>
                         </div>
                     `;
                 });
                 
                 document.getElementById('countries').innerHTML = countriesHTML;
+                
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('content').style.display = 'block';
             } catch (error) {
+                console.error('Error:', error);
                 document.getElementById('loading').textContent = 'Hata: ' + error.message;
+                document.getElementById('loading').style.color = 'red';
             }
         }
 
+        // Enter key for login
         document.getElementById('password').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') login();
         });
