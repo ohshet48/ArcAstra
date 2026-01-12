@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arc Astra - Admin Panel</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 100%);
@@ -18,23 +13,9 @@
             color: white;
             padding: 20px;
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .header h1 {
-            font-size: 32px;
-            color: #00ffff;
-            margin-bottom: 10px;
-        }
-        
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 40px; }
+        .header h1 { font-size: 32px; color: #00ffff; margin-bottom: 10px; }
         .login-box {
             background: rgba(0, 0, 0, 0.4);
             border: 2px solid rgba(0, 255, 255, 0.3);
@@ -43,7 +24,6 @@
             max-width: 400px;
             margin: 0 auto;
         }
-        
         .login-box input {
             width: 100%;
             padding: 15px;
@@ -54,7 +34,6 @@
             font-size: 16px;
             margin-bottom: 15px;
         }
-        
         .login-box button {
             width: 100%;
             padding: 15px;
@@ -66,22 +45,13 @@
             font-weight: bold;
             cursor: pointer;
         }
-        
-        .login-box button:hover {
-            opacity: 0.9;
-        }
-        
-        .stats-container {
-            display: none;
-        }
-        
+        .stats-container { display: none; }
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
-        
         .stat-card {
             background: rgba(0, 0, 0, 0.4);
             border: 2px solid rgba(0, 255, 255, 0.3);
@@ -89,59 +59,28 @@
             padding: 25px;
             text-align: center;
         }
-        
         .stat-card h3 {
             font-size: 14px;
             color: rgba(255, 255, 255, 0.7);
             margin-bottom: 10px;
             text-transform: uppercase;
         }
-        
-        .stat-card .number {
-            font-size: 48px;
-            color: #00ffff;
-            font-weight: bold;
-        }
-        
+        .stat-card .number { font-size: 48px; color: #00ffff; font-weight: bold; }
         .countries-table {
             background: rgba(0, 0, 0, 0.4);
             border: 2px solid rgba(0, 255, 255, 0.3);
             border-radius: 15px;
             padding: 25px;
         }
-        
-        .countries-table h2 {
-            color: #00ffff;
-            margin-bottom: 20px;
-        }
-        
+        .countries-table h2 { color: #00ffff; margin-bottom: 20px; }
         .country-row {
             display: flex;
             justify-content: space-between;
             padding: 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
-        .country-row:last-child {
-            border-bottom: none;
-        }
-        
-        .country-name {
-            font-size: 16px;
-        }
-        
-        .country-count {
-            font-size: 16px;
-            color: #00ffff;
-            font-weight: bold;
-        }
-        
-        .error {
-            color: #ff6b6b;
-            text-align: center;
-            margin-top: 10px;
-        }
-        
+        .country-count { color: #00ffff; font-weight: bold; }
+        .error { color: #ff6b6b; text-align: center; margin-top: 10px; }
         .logout-btn {
             position: absolute;
             top: 20px;
@@ -153,107 +92,88 @@
             color: white;
             cursor: pointer;
         }
+        .loading { text-align: center; color: #00ffff; font-size: 18px; margin: 20px 0; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>🔒 Arc Astra Admin Panel</h1>
-        </div>
-        
-        <!-- Login Box -->
+        <div class="header"><h1>🔒 Arc Astra Admin Panel</h1></div>
         <div id="loginBox" class="login-box">
             <h2 style="margin-bottom: 20px; text-align: center;">Enter Admin Password</h2>
             <input type="password" id="adminPassword" placeholder="Admin Password">
             <button onclick="login()">Login</button>
             <div id="errorMsg" class="error"></div>
         </div>
-        
-        <!-- Stats Container -->
         <div id="statsContainer" class="stats-container">
             <button class="logout-btn" onclick="logout()">Logout</button>
-            
+            <div class="loading" id="loadingMsg">Loading statistics...</div>
             <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>Total Users</h3>
-                    <div class="number" id="totalUsers">-</div>
-                </div>
-                
-                <div class="stat-card">
-                    <h3>Active Users (48h)</h3>
-                    <div class="number" id="activeUsers">-</div>
-                </div>
-                
-                <div class="stat-card">
-                    <h3>Active Rate</h3>
-                    <div class="number" id="activeRate">-</div>
-                </div>
+                <div class="stat-card"><h3>Total Users</h3><div class="number" id="totalUsers">-</div></div>
+                <div class="stat-card"><h3>Active Users (48h)</h3><div class="number" id="activeUsers">-</div></div>
+                <div class="stat-card"><h3>Active Rate</h3><div class="number" id="activeRate">-</div></div>
             </div>
-            
-            <div class="countries-table">
-                <h2>Users by Country</h2>
-                <div id="countriesList"></div>
-            </div>
+            <div class="countries-table"><h2>Users by Country</h2><div id="countriesList"></div></div>
         </div>
     </div>
-    
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script>
-        const API_URL = 'https://europe-west1-arcastra.cloudfunctions.net/getAdminStats';
-        const API_KEY = 'arcastra-api-key-2024-secure';
+        const firebaseConfig = {
+            apiKey: "AIzaSyC4pE9hV4QT0Y9aK7LxZ3W8mN2rP6sF1Xg",
+            authDomain: "arcastra-eba62.firebaseapp.com",
+            projectId: "arcastra-eba62",
+            storageBucket: "arcastra-eba62.firebasestorage.app",
+            messagingSenderId: "547925747222",
+            appId: "1:547925747222:web:abcdef123456"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const ADMIN_PASSWORD = 'arcastra2025admin';
         
-        async function login() {
+        function login() {
             const password = document.getElementById('adminPassword').value;
             const errorMsg = document.getElementById('errorMsg');
-            
-            if (!password) {
-                errorMsg.textContent = 'Please enter password';
-                return;
-            }
-            
+            if (!password) { errorMsg.textContent = 'Please enter password'; return; }
+            if (password !== ADMIN_PASSWORD) { errorMsg.textContent = 'Invalid password'; return; }
+            document.getElementById('loginBox').style.display = 'none';
+            document.getElementById('statsContainer').style.display = 'block';
+            loadStats();
+        }
+        
+        async function loadStats() {
             try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-api-key': API_KEY
-                    },
-                    body: JSON.stringify({
-                        adminPassword: password
-                    })
+                document.getElementById('loadingMsg').style.display = 'block';
+                const usersSnapshot = await db.collection('users').get();
+                let totalUsers = 0, activeUsers = 0;
+                const countryStats = {};
+                usersSnapshot.forEach(doc => {
+                    const user = doc.data();
+                    totalUsers++;
+                    if (user.lastMiningDate) {
+                        const lastMining = user.lastMiningDate.toDate();
+                        const hoursSinceLastMining = (Date.now() - lastMining.getTime()) / (1000 * 60 * 60);
+                        if (hoursSinceLastMining <= 48) activeUsers++;
+                    }
+                    const country = user.country || 'Unknown';
+                    countryStats[country] = (countryStats[country] || 0) + 1;
                 });
-                
-                const data = await response.json();
-                
-                if (response.ok) {
-                    // Success - show stats
-                    document.getElementById('loginBox').style.display = 'none';
-                    document.getElementById('statsContainer').style.display = 'block';
-                    
-                    // Update stats
-                    document.getElementById('totalUsers').textContent = data.totalUsers;
-                    document.getElementById('activeUsers').textContent = data.activeUsers;
-                    document.getElementById('activeRate').textContent = 
-                        ((data.activeUsers / data.totalUsers) * 100).toFixed(1) + '%';
-                    
-                    // Update countries
-                    const countriesList = document.getElementById('countriesList');
-                    countriesList.innerHTML = '';
-                    
-                    data.countries.forEach(country => {
-                        const row = document.createElement('div');
-                        row.className = 'country-row';
-                        row.innerHTML = `
-                            <div class="country-name">${country.country}</div>
-                            <div class="country-count">${country.count} users</div>
-                        `;
-                        countriesList.appendChild(row);
-                    });
-                } else {
-                    errorMsg.textContent = data.error || 'Invalid password';
-                }
+                document.getElementById('totalUsers').textContent = totalUsers;
+                document.getElementById('activeUsers').textContent = activeUsers;
+                document.getElementById('activeRate').textContent = ((activeUsers / totalUsers) * 100).toFixed(1) + '%';
+                const sortedCountries = Object.entries(countryStats).sort((a, b) => b[1] - a[1]);
+                const countriesList = document.getElementById('countriesList');
+                countriesList.innerHTML = '';
+                sortedCountries.forEach(([country, count]) => {
+                    const row = document.createElement('div');
+                    row.className = 'country-row';
+                    row.innerHTML = `<div class="country-name">${country}</div><div class="country-count">${count} users</div>`;
+                    countriesList.appendChild(row);
+                });
+                document.getElementById('loadingMsg').style.display = 'none';
             } catch (error) {
-                console.error('Login error:', error);
-                errorMsg.textContent = 'Connection error';
+                console.error('Error:', error);
+                document.getElementById('loadingMsg').textContent = 'Error loading statistics';
+                document.getElementById('loadingMsg').style.color = '#ff6b6b';
             }
         }
         
@@ -264,11 +184,8 @@
             document.getElementById('errorMsg').textContent = '';
         }
         
-        // Enter key to login
         document.getElementById('adminPassword').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                login();
-            }
+            if (e.key === 'Enter') login();
         });
     </script>
 </body>
