@@ -106,6 +106,7 @@
 <body>
     <div id="loginBox">
         <h1>🔒 Admin Girişi</h1>
+        <input type="email" id="email" placeholder="Email">
         <input type="password" id="password" placeholder="Şifre">
         <button onclick="login()">Giriş</button>
         <div id="error" class="error"></div>
@@ -163,9 +164,10 @@
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-functions-compat.js"></script>
     <script>
-        const PASSWORD = 'Mamicik48.';
         const firebaseConfig = {
             apiKey: "AIzaSyDe_cjESa1hQoGiabRoLO2Tmj6JrZVB9NY",
             authDomain: "arcastra-eba62.firebaseapp.com",
@@ -175,22 +177,32 @@
             appId: "1:547925747222:web:01a6b875fe14624d777737"
         };
         firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
         const db = firebase.firestore();
+        const functions = firebase.functions();
 
-        function login() {
+        async function login() {
+            const email = document.getElementById('email').value;
             const pass = document.getElementById('password').value;
-            if (pass !== PASSWORD) {
-                document.getElementById('error').textContent = 'Hatalı şifre!';
+            const errorDiv = document.getElementById('error');
+            
+            if (!email || !pass) {
+                errorDiv.textContent = 'Email ve şifre girin!';
                 return;
             }
-            document.getElementById('loginBox').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
             
-            // Set today's date
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('announcementDate').value = today;
-            
-            loadData();
+            try {
+                await auth.signInWithEmailAndPassword(email, pass);
+                document.getElementById('loginBox').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('announcementDate').value = today;
+                
+                loadData();
+            } catch (error) {
+                errorDiv.textContent = 'Hatalı email veya şifre!';
+            }
         }
 
         async function loadData() {
@@ -265,16 +277,15 @@
             try {
                 resultDiv.innerHTML = '<div class="loading">Gönderiliyor...</div>';
                 
-                await db.collection('announcements').add({
+                const adminAnnouncement = functions.httpsCallable('adminAnnouncement');
+                await adminAnnouncement({
                     title: title,
                     message: message,
-                    date: date,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    date: date
                 });
                 
                 resultDiv.innerHTML = '<div class="success">✅ Duyuru başarıyla gönderildi!</div>';
                 
-                // Clear form
                 document.getElementById('announcementTitle').value = '';
                 document.getElementById('announcementMessage').value = '';
             } catch (error) {
@@ -296,52 +307,18 @@
             try {
                 resultDiv.innerHTML = '<div class="loading">Gönderiliyor...</div>';
                 
+                const adminAirdrop = functions.httpsCallable('adminAirdrop');
+                const result = await adminAirdrop({
+                    username: username,
+                    amount: amount
+                });
+                
                 if (username.toLowerCase() === 'all') {
-                    // Tüm kullanıcılara airdrop oluştur
-                    const usersSnapshot = await db.collection('users').get();
-                    let count = 0;
-                    
-                    const batch = db.batch();
-                    usersSnapshot.forEach(doc => {
-                        const airdropRef = db.collection('airdrops').doc();
-                        batch.set(airdropRef, {
-                            userId: doc.id,
-                            username: doc.data().username,
-                            amount: amount,
-                            claimed: false,
-                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                        });
-                        count++;
-                    });
-                    
-                    await batch.commit();
-                    resultDiv.innerHTML = `<div class="success">✅ ${count} kullanıcı için ${amount} ARCA airdrop oluşturuldu!</div>`;
+                    resultDiv.innerHTML = `<div class="success">✅ ${result.data.count} kullanıcı için ${amount} ARCA airdrop oluşturuldu!</div>`;
                 } else {
-                    // Tek kullanıcıya airdrop oluştur
-                    const userQuery = await db.collection('users')
-                        .where('username', '==', username)
-                        .limit(1)
-                        .get();
-                    
-                    if (userQuery.empty) {
-                        resultDiv.innerHTML = '<div class="error">❌ Kullanıcı bulunamadı!</div>';
-                        return;
-                    }
-                    
-                    const userDoc = userQuery.docs[0];
-                    
-                    await db.collection('airdrops').add({
-                        userId: userDoc.id,
-                        username: username,
-                        amount: amount,
-                        claimed: false,
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                    
                     resultDiv.innerHTML = `<div class="success">✅ ${username} için ${amount} ARCA airdrop oluşturuldu!</div>`;
                 }
                 
-                // Clear form
                 document.getElementById('airdropUsername').value = '';
                 document.getElementById('airdropAmount').value = '';
             } catch (error) {
@@ -352,6 +329,10 @@
 
         document.getElementById('password').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') login();
+        });
+        
+        document.getElementById('email').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') document.getElementById('password').focus();
         });
     </script>
 </body>
