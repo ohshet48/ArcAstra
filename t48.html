@@ -192,8 +192,8 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
         
-        // ✅ CRITICAL FIX: Region ayarı eklendi
-        const functions = firebase.functions('europe-west1');
+        // Initialize functions with region
+        const functions = firebase.app().functions('europe-west1');
 
         async function login() {
             const email = document.getElementById('email').value;
