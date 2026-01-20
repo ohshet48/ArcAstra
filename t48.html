@@ -333,13 +333,14 @@
                 const adminAirdrop = functions.httpsCallable('adminAirdrop');
                 const result = await adminAirdrop({
                     username: username,
-                    amount: amount
+                    amount: amount,
+                    title: username.toLowerCase() === 'all' ? 'Global Airdrop' : 'Personal Airdrop'
                 });
                 
                 if (username.toLowerCase() === 'all') {
-                    resultDiv.innerHTML = `<div class="success">✅ ${result.data.count} kullanıcı için ${amount} ARCA airdrop oluşturuldu!</div>`;
+                    resultDiv.innerHTML = `<div class="success">✅ Tüm kullanıcılar için ${amount} ARC airdrop oluşturuldu!</div>`;
                 } else {
-                    resultDiv.innerHTML = `<div class="success">✅ ${username} için ${amount} ARCA airdrop oluşturuldu!</div>`;
+                    resultDiv.innerHTML = `<div class="success">✅ ${username} için ${amount} ARC airdrop oluşturuldu!</div>`;
                 }
                 
                 document.getElementById('airdropUsername').value = '';
