@@ -30,6 +30,12 @@
             margin-bottom: 20px;
             border-radius: 10px;
         }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
         .stat-title {
             color: #00ffff;
             font-size: 14px;
@@ -119,13 +125,15 @@
         <h2>📊 İstatistikler</h2>
         <div class="loading" id="loading">Yükleniyor...</div>
         <div id="content" style="display: none;">
-            <div class="stat">
-                <div class="stat-title">Toplam Kullanıcı</div>
-                <div class="stat-value" id="totalUsers">-</div>
-            </div>
-            <div class="stat">
-                <div class="stat-title">Aktif Kullanıcı (Son 24 Saat)</div>
-                <div class="stat-value" id="activeUsers">-</div>
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-title">Toplam Kullanıcı</div>
+                    <div class="stat-value" id="totalUsers">-</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">Aktif Kullanıcı (Son 24 Saat)</div>
+                    <div class="stat-value" id="activeUsers">-</div>
+                </div>
             </div>
             <div class="country-list">
                 <div class="stat-title" style="margin-bottom: 20px;">Ülkelere Göre Kullanıcılar</div>
@@ -142,8 +150,8 @@
             <label>Mesaj:</label>
             <textarea id="announcementMessage" placeholder="Duyuru mesajı"></textarea>
             
-            <label>Tarih:</label>
-            <input type="date" id="announcementDate">
+            <label>Tarih ve Saat:</label>
+            <input type="datetime-local" id="announcementDate">
             
             <button onclick="sendAnnouncement()">Duyuru Gönder</button>
             <div id="announcementResult"></div>
@@ -196,8 +204,10 @@
                 document.getElementById('loginBox').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
                 
-                const today = new Date().toISOString().split('T')[0];
-                document.getElementById('announcementDate').value = today;
+                const now = new Date();
+                const offset = now.getTimezoneOffset() * 60000;
+                const localTime = new Date(now - offset).toISOString().slice(0, 16);
+                document.getElementById('announcementDate').value = localTime;
                 
                 loadData();
             } catch (error) {
