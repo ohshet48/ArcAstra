@@ -254,7 +254,9 @@
                 document.getElementById('activeUsers').textContent = activeUsers.toLocaleString();
                 
                 let countriesHTML = '';
-                sortedCountries.forEach(item => {
+                const displayLimit = 5;
+                
+                sortedCountries.slice(0, displayLimit).forEach(item => {
                     countriesHTML += `
                         <div class="country-item">
                             <span>${item.country}</span>
@@ -263,7 +265,18 @@
                     `;
                 });
                 
+                if (sortedCountries.length > displayLimit) {
+                    countriesHTML += `
+                        <button onclick="showAllCountries()" style="margin-top: 15px; padding: 10px; background: rgba(0, 255, 255, 0.2); border: 1px solid #00ffff; color: #00ffff; cursor: pointer; border-radius: 8px; width: 100%;">
+                            Daha Fazla (${sortedCountries.length - displayLimit} ülke daha)
+                        </button>
+                    `;
+                }
+                
                 document.getElementById('countries').innerHTML = countriesHTML;
+                
+                // Store all countries for "show more" functionality
+                window.allCountries = sortedCountries;
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('content').style.display = 'block';
             } catch (error) {
@@ -344,6 +357,48 @@
         document.getElementById('email').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') document.getElementById('password').focus();
         });
+        
+        function showAllCountries() {
+            let countriesHTML = '';
+            window.allCountries.forEach(item => {
+                countriesHTML += `
+                    <div class="country-item">
+                        <span>${item.country}</span>
+                        <span style="color: #00ffff; font-weight: bold;">${item.count.toLocaleString()}</span>
+                    </div>
+                `;
+            });
+            
+            countriesHTML += `
+                <button onclick="showLessCountries()" style="margin-top: 15px; padding: 10px; background: rgba(0, 255, 255, 0.2); border: 1px solid #00ffff; color: #00ffff; cursor: pointer; border-radius: 8px; width: 100%;">
+                    Daha Az Göster
+                </button>
+            `;
+            
+            document.getElementById('countries').innerHTML = countriesHTML;
+        }
+        
+        function showLessCountries() {
+            let countriesHTML = '';
+            const displayLimit = 5;
+            
+            window.allCountries.slice(0, displayLimit).forEach(item => {
+                countriesHTML += `
+                    <div class="country-item">
+                        <span>${item.country}</span>
+                        <span style="color: #00ffff; font-weight: bold;">${item.count.toLocaleString()}</span>
+                    </div>
+                `;
+            });
+            
+            countriesHTML += `
+                <button onclick="showAllCountries()" style="margin-top: 15px; padding: 10px; background: rgba(0, 255, 255, 0.2); border: 1px solid #00ffff; color: #00ffff; cursor: pointer; border-radius: 8px; width: 100%;">
+                    Daha Fazla (${window.allCountries.length - displayLimit} ülke daha)
+                </button>
+            `;
+            
+            document.getElementById('countries').innerHTML = countriesHTML;
+        }
     </script>
 </body>
 </html>
