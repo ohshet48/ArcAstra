@@ -378,6 +378,20 @@
             }
         }
 
+        // Auth state listener - sayfa yenilendiğinde oturum kontrolü
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // Kullanıcı giriş yapmış, dashboard'u göster
+                document.getElementById('loginBox').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                loadStats();
+            } else {
+                // Kullanıcı giriş yapmamış, login ekranını göster
+                document.getElementById('loginBox').style.display = 'block';
+                document.getElementById('dashboard').style.display = 'none';
+            }
+        });
+
         document.getElementById('password').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') login();
         });
