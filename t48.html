@@ -237,6 +237,7 @@
                     countryStats[country] = (countryStats[country] || 0) + 1;
                 });
 
+                // Son 24 saatte başlatılan tüm session'ları çek
                 const twentyFourHoursAgo = new Date(Date.now() - (24 * 60 * 60 * 1000));
                 const activeSessionsSnapshot = await db
                     .collection('miningSessions')
@@ -244,10 +245,15 @@
                     .get();
                 
                 const activeUserIds = new Set();
+                const now = new Date();
+                
                 activeSessionsSnapshot.forEach(doc => {
                     const session = doc.data();
                     if (session.userId) {
-                        activeUserIds.add(session.userId);
+                        // endTime yoksa veya endTime henüz gelmemişse (hala mining yapıyor)
+                        if (!session.endTime || session.endTime.toDate() > now) {
+                            activeUserIds.add(session.userId);
+                        }
                     }
                 });
                 
